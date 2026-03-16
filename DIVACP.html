@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTROLE DE PROCESSO - DIVACP</title>
+  <link rel="stylesheet" href="DIVACP.css" />
+</head>
+<body>
+  <div class="app">
+    <main class="content">
+
+      <!-- ===== PAINEL DIVACP ===== -->
+      <section id="divacp" class="page">
+        <div class="header-bar">
+          <div class="header-left">
+            <div class="brand-logo">DV</div>
+            <div class="brand-text">
+              <h1>CONTROLE DE PROCESSO</h1>
+              <span>PAINEL DIVACP</span>
+            </div>
+          </div>
+          <div class="profile-menu">
+            <img id="profileAvatar" class="profile-avatar" src="ICONES/01 - PERFIL.png" alt="PERFIL" />
+            <div class="profile-dropdown" id="profileDropdown">
+              <button class="logoutBtn">SAIR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="top-action-row">
+            <button class="btn btn-primary btn-cadastrar-top" id="openProcessBtn">CADASTRAR PROCESSO</button>
+          </div>
+          <div class="nav-left">
+            <div class="nav-tabs">
+              <button class="nav-tab active" data-page="divacp">PAINEL DIVACP</button>
+              <button class="nav-tab" data-page="andamento-page">ANDAMENTO</button>
+              <button class="nav-tab" data-page="nr-licitacao-page">NR. LICITAÇÃO</button>
+              <button class="nav-tab" data-page="diarios-page">DIÁRIOS</button>
+            </div>
+            <div class="search-card">
+              <div class="field">
+                <label for="searchInput">PESQUISA RÁPIDA</label>
+                <input type="text" id="searchInput" placeholder="DIGITE DATA, ÓRGÃO, OBJETO OU Nº PROCESSO" />
+              </div>
+              <button class="btn btn-light" type="button" id="clearSearchBtn">LIMPAR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-grid">
+          <div class="card">
+            <div class="section-title">
+              <h3>CONTROLE RESUMIDO DE PROCESSOS</h3>
+              <span style="color: var(--muted); font-size: 14px;">ORDENADO POR DATA DE CHEGADA</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="col-processo">NR. PROCESSO</th>
+                    <th class="col-data">DATA ENTRADA SELIC</th>
+                    <th class="col-orgao">ÓRGÃO</th>
+                    <th class="col-objeto">OBJETO</th>
+                    <th class="col-modalidade">MODALIDADE</th>
+                    <th class="col-licitacao">NR. LICITAÇÃO</th>
+                    <th class="col-fonte">FONTE</th>
+                    <th class="col-setor">SETOR</th>
+                    <th class="col-acao">AÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody id="divacpProcessTableBody">
+                  <tr
+                    data-id="proc-1"
+                    data-created-at="2026-03-13T14:10:00.000Z"
+                    data-nr-processo="1234.123456.12345/1234-12"
+                    data-data-entrada-selic="13/03/2026"
+                    data-orgao="SEMED"
+                    data-objeto="AQUISIÇÃO DE MATERIAL DE EXPEDIENTE PARA TODAS AS UNIDADES ADMINISTRATIVAS DA SECRETARIA MUNICIPAL DE EDUCAÇÃO."
+                    data-modalidade="PREGÃO ELETRÔNICO"
+                    data-nr-licitacao="014/2026"
+                    data-fonte="TESOURO"
+                    data-setor="DIVACP"
+                    data-valor-estimado="R$ 150.000,00"
+                    data-ano-licitacao="2026"
+                    data-data-entrada-divcon="14/03/2026"
+                    data-responsavel-minuta="MARIANA"
+                    data-status-divcon="EM ANÁLISE"
+                    data-itens-lote="LOTE 01"
+                    data-responsavel="CARLOS"
+                    data-data-inicial="15/03/2026"
+                    data-data-final="30/03/2026"
+                    data-data-abertura="02/04/2026"
+                    data-hora="09:00"
+                    data-valor-deserto="R$ 0,00"
+                    data-valor-estimado-atualizado="R$ 150.000,00"
+                    data-andamento="PROCESSO EM TRIAGEM"
+                    data-sei-planilha="SEI-001245/2026"
+                    data-valor-adjudicado="R$ 0,00"
+                    data-status="ABERTO"
+                    data-setor-responsavel="DIVACP"
+                  >
+                    <td>1234.123456.12345/1234-12</td>
+                    <td>13/03/2026</td>
+                    <td>SEMED</td>
+                    <td class="objeto-cell">AQUISIÇÃO DE MATERIAL DE EXPEDIENTE PARA TODAS AS UNIDADES ADMINISTRATIVAS DA SECRETARIA MUNICIPAL DE EDUCAÇÃO.</td>
+                    <td>PREGÃO ELETRÔNICO</td>
+                    <td>014/2026</td>
+                    <td>TESOURO</td>
+                    <td>DIVACP</td>
+                    <td class="actions-cell">
+                      <div class="row-menu-wrap">
+                        <button class="menu-trigger" type="button" title="OPÇÕES">⋮</button>
+                        <div class="actions-menu">
+                          <button class="menu-item menu-open btn-open" type="button"><span class="menu-icon">📂</span><span>ABRIR</span></button>
+                          <button class="menu-item menu-send btn-send" type="button"><span class="menu-icon">📤</span><span>ENVIAR</span></button>
+                          <button class="menu-item menu-edit btn-edit-row" type="button"><span class="menu-icon">✏️</span><span>EDITAR</span></button>
+                          <button class="menu-item menu-delete btn-delete-row" type="button"><span class="menu-icon">🗑️</span><span>EXCLUIR</span></button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr
+                    data-id="proc-2"
+                    data-created-at="2026-03-13T14:10:01.000Z"
+                    data-nr-processo="5678.654321.54321/4321-21"
+                    data-data-entrada-selic="12/03/2026"
+                    data-orgao="SEMSA"
+                    data-objeto="CONTRATAÇÃO DE SERVIÇOS ESPECIALIZADOS PARA MANUTENÇÃO PREVENTIVA E CORRETIVA DOS EQUIPAMENTOS HOSPITALARES."
+                    data-modalidade="CONCORRÊNCIA"
+                    data-nr-licitacao="008/2026"
+                    data-fonte="CONVÊNIO"
+                    data-setor="DIVCON"
+                    data-valor-estimado="R$ 890.000,00"
+                    data-ano-licitacao="2026"
+                    data-data-entrada-divcon="13/03/2026"
+                    data-responsavel-minuta="FERNANDA"
+                    data-status-divcon="CONCLUÍDO"
+                    data-itens-lote="LOTE ÚNICO"
+                    data-responsavel="JOÃO"
+                    data-data-inicial="14/03/2026"
+                    data-data-final="28/03/2026"
+                    data-data-abertura="05/04/2026"
+                    data-hora="10:30"
+                    data-valor-deserto="R$ 0,00"
+                    data-valor-estimado-atualizado="R$ 890.000,00"
+                    data-andamento="MINUTA FINALIZADA"
+                    data-sei-planilha="SEI-004589/2026"
+                    data-valor-adjudicado="R$ 845.500,00"
+                    data-status="FINALIZADO"
+                    data-setor-responsavel="DIVACP"
+                  >
+                    <td>5678.654321.54321/4321-21</td>
+                    <td>12/03/2026</td>
+                    <td>SEMSA</td>
+                    <td class="objeto-cell">CONTRATAÇÃO DE SERVIÇOS ESPECIALIZADOS PARA MANUTENÇÃO PREVENTIVA E CORRETIVA DOS EQUIPAMENTOS HOSPITALARES.</td>
+                    <td>CONCORRÊNCIA</td>
+                    <td>008/2026</td>
+                    <td>CONVÊNIO</td>
+                    <td>DIVCON</td>
+                    <td class="actions-cell">
+                      <div class="row-menu-wrap">
+                        <button class="menu-trigger" type="button" title="OPÇÕES">⋮</button>
+                        <div class="actions-menu">
+                          <button class="menu-item menu-open btn-open" type="button"><span class="menu-icon">📂</span><span>ABRIR</span></button>
+                          <button class="menu-item menu-send btn-send" type="button"><span class="menu-icon">📤</span><span>ENVIAR</span></button>
+                          <button class="menu-item menu-edit btn-edit-row" type="button"><span class="menu-icon">✏️</span><span>EDITAR</span></button>
+                          <button class="menu-item menu-delete btn-delete-row" type="button"><span class="menu-icon">🗑️</span><span>EXCLUIR</span></button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr
+                    data-id="proc-3"
+                    data-created-at="2026-03-13T14:10:02.000Z"
+                    data-nr-processo="9999.000111.22233/4444-55"
+                    data-data-entrada-selic="11/03/2026"
+                    data-orgao="SEMINFRA"
+                    data-objeto="OBRA DE REFORMA PREDIAL COM ADEQUAÇÕES ESTRUTURAIS, ELÉTRICAS E HIDROSSANITÁRIAS NO PRÉDIO ADMINISTRATIVO."
+                    data-modalidade="CHAMAMENTO PÚBLICO"
+                    data-nr-licitacao="XXX/2026"
+                    data-fonte="RECURSO PRÓPRIO"
+                    data-setor="DIVACP"
+                    data-valor-estimado="R$ 420.000,00"
+                    data-ano-licitacao="-"
+                    data-data-entrada-divcon="12/03/2026"
+                    data-responsavel-minuta="ANA PAULA"
+                    data-status-divcon="URGENTE"
+                    data-itens-lote="ITEM 01"
+                    data-responsavel="PAULO"
+                    data-data-inicial="13/03/2026"
+                    data-data-final="27/03/2026"
+                    data-data-abertura="07/04/2026"
+                    data-hora="08:00"
+                    data-valor-deserto="R$ 0,00"
+                    data-valor-estimado-atualizado="R$ 445.000,00"
+                    data-andamento="AGUARDANDO AJUSTES"
+                    data-sei-planilha="SEI-007852/2026"
+                    data-valor-adjudicado="R$ 0,00"
+                    data-status="PENDENTE"
+                    data-setor-responsavel="DIVACP"
+                  >
+                    <td>9999.000111.22233/4444-55</td>
+                    <td>11/03/2026</td>
+                    <td>SEMINFRA</td>
+                    <td class="objeto-cell">OBRA DE REFORMA PREDIAL COM ADEQUAÇÕES ESTRUTURAIS, ELÉTRICAS E HIDROSSANITÁRIAS NO PRÉDIO ADMINISTRATIVO.</td>
+                    <td>CHAMAMENTO PÚBLICO</td>
+                    <td>XXX/2026</td>
+                    <td>RECURSO PRÓPRIO</td>
+                    <td>DIVACP</td>
+                    <td class="actions-cell">
+                      <div class="row-menu-wrap">
+                        <button class="menu-trigger" type="button" title="OPÇÕES">⋮</button>
+                        <div class="actions-menu">
+                          <button class="menu-item menu-open btn-open" type="button"><span class="menu-icon">📂</span><span>ABRIR</span></button>
+                          <button class="menu-item menu-send btn-send" type="button"><span class="menu-icon">📤</span><span>ENVIAR</span></button>
+                          <button class="menu-item menu-edit btn-edit-row" type="button"><span class="menu-icon">✏️</span><span>EDITAR</span></button>
+                          <button class="menu-item menu-delete btn-delete-row" type="button"><span class="menu-icon">🗑️</span><span>EXCLUIR</span></button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ANDAMENTO ===== -->
+      <section id="andamento-page" class="page hidden">
+        <div class="header-bar">
+          <div class="header-left">
+            <div class="brand-logo">DV</div>
+            <div class="brand-text">
+              <h1>CONTROLE DE PROCESSO</h1>
+              <span>ANDAMENTO</span>
+            </div>
+          </div>
+          <div class="profile-menu">
+            <img class="profile-avatar" src="ICONES/01 - PERFIL.png" alt="PERFIL" />
+            <div class="profile-dropdown">
+              <button class="logoutBtn">SAIR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="top-action-row">
+            <button class="btn btn-primary btn-cadastrar-top" type="button" id="openProcessBtnAndamento">CADASTRAR PROCESSO</button>
+          </div>
+          <div class="nav-left">
+            <div class="nav-tabs">
+              <button class="nav-tab" data-page="divacp">PAINEL DIVACP</button>
+              <button class="nav-tab active" data-page="andamento-page">ANDAMENTO</button>
+              <button class="nav-tab" data-page="nr-licitacao-page">NR. LICITAÇÃO</button>
+              <button class="nav-tab" data-page="diarios-page">DIÁRIOS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="main-grid">
+          <div class="card">
+            <div class="section-title">
+              <h3>PROCESSOS ENCAMINHADOS</h3>
+              <span style="color: var(--muted); font-size: 14px;">HISTÓRICO DE PROCESSOS ENVIADOS E SEUS ANDAMENTOS</span>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th class="col-processo">NR. PROCESSO</th>
+                    <th class="col-data">DATA ENTRADA SELIC</th>
+                    <th class="col-orgao">ÓRGÃO</th>
+                    <th class="col-objeto">OBJETO</th>
+                    <th class="col-modalidade">MODALIDADE</th>
+                    <th class="col-licitacao">NR. LICITAÇÃO</th>
+                    <th class="col-fonte">FONTE</th>
+                    <th class="col-setor">SETOR</th>
+                    <th class="col-andamento-destino">DESTINO</th>
+                    <th class="col-andamento-envio">DATA ENVIO</th>
+                    <th class="col-acao">AÇÃO</th>
+                  </tr>
+                </thead>
+                <tbody id="andamentoTableBody">
+                  <tr id="andamentoEmptyRow">
+                    <td colspan="11" style="text-align:center; color: var(--muted); padding: 30px;">
+                      NENHUM PROCESSO ENCAMINHADO AINDA.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== NR. LICITAÇÃO ===== -->
+      <section id="nr-licitacao-page" class="page hidden">
+        <div class="header-bar">
+          <div class="header-left">
+            <div class="brand-logo">DV</div>
+            <div class="brand-text">
+              <h1>NR. LICITAÇÃO</h1>
+              <span>GERAÇÃO NUMÉRICA POR MODALIDADE</span>
+            </div>
+          </div>
+          <div class="profile-menu">
+            <img class="profile-avatar" src="ICONES/01 - PERFIL.png" alt="PERFIL" />
+            <div class="profile-dropdown">
+              <button class="logoutBtn">SAIR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="top-action-row">
+            <button class="btn btn-primary btn-cadastrar-top" type="button" id="openProcessBtnLicitacao">CADASTRAR PROCESSO</button>
+          </div>
+          <div class="nav-left">
+            <div class="nav-tabs">
+              <button class="nav-tab" data-page="divacp">PAINEL DIVACP</button>
+              <button class="nav-tab" data-page="andamento-page">ANDAMENTO</button>
+              <button class="nav-tab active" data-page="nr-licitacao-page">NR. LICITAÇÃO</button>
+              <button class="nav-tab" data-page="diarios-page">DIÁRIOS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h3>MODALIDADES</h3>
+            <div class="filter-status" id="filterStatus">SELECIONE UMA MODALIDADE</div>
+          </div>
+
+          <div class="modalidades-wrap">
+            <button class="modalidade-chip licitacao-modalidade" type="button" data-modalidade="PREGÃO ELETRÔNICO">PREGÃO ELETRÔNICO</button>
+            <button class="modalidade-chip licitacao-modalidade" type="button" data-modalidade="CONCORRÊNCIA">CONCORRÊNCIA</button>
+            <button class="modalidade-chip licitacao-modalidade" type="button" data-modalidade="CHAMAMENTO PÚBLICO">CHAMAMENTO PÚBLICO</button>
+            <button class="modalidade-chip licitacao-modalidade" type="button" data-modalidade="SELEÇÃO DE CONSULTOR INDIVIDUAL">SELEÇÃO DE CONSULTOR INDIVIDUAL</button>
+          </div>
+
+          <div class="licitacao-generator">
+            <div class="field">
+              <label for="licitacaoProcessoInput">NR. PROCESSO CADASTRADO</label>
+              <div class="input-with-status">
+                <input type="text" id="licitacaoProcessoInput" placeholder="0000.000000.00000/0000-00" />
+                <span class="status-icon" id="statusLicitacaoProcesso">✔</span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="licitacaoAnoInput">ANO</label>
+              <div class="input-with-status">
+                <input type="number" id="licitacaoAnoInput" min="2024" max="2100" value="2026" />
+                <span class="status-icon" id="statusLicitacaoAno">✔</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="button" id="generateLicitacaoBtn">GERAR NR. LICITAÇÃO</button>
+          </div>
+
+          <div class="section-title" style="margin-top: 8px;">
+            <h3>LISTA DE LICITAÇÕES</h3>
+            <span style="color: var(--muted); font-size: 14px;">MOSTRA APENAS A MODALIDADE SELECIONADA</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-licitacao-processo">NR. PROCESSO</th>
+                  <th class="col-licitacao-numero">NR. LICITAÇÃO</th>
+                  <th class="col-licitacao-orgao">ÓRGÃO</th>
+                  <th class="col-licitacao-modalidade">MODALIDADE</th>
+                  <th class="col-licitacao-objeto">OBJETO</th>
+                  <th class="col-licitacao-acoes">AÇÕES</th>
+                </tr>
+              </thead>
+              <tbody id="licitacaoTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== DIÁRIOS ===== -->
+      <section id="diarios-page" class="page hidden">
+        <div class="header-bar">
+          <div class="header-left">
+            <div class="brand-logo">DV</div>
+            <div class="brand-text">
+              <h1>DIÁRIOS</h1>
+              <span>ACOMPANHAMENTO DIÁRIO DE PROCESSOS</span>
+            </div>
+          </div>
+          <div class="profile-menu">
+            <img class="profile-avatar" src="ICONES/01 - PERFIL.png" alt="PERFIL" />
+            <div class="profile-dropdown">
+              <button class="logoutBtn">SAIR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="top-action-row">
+            <button class="btn btn-primary btn-cadastrar-top" type="button" id="openProcessBtnDiarios">CADASTRAR PROCESSO</button>
+          </div>
+          <div class="nav-left">
+            <div class="nav-tabs">
+              <button class="nav-tab" data-page="divacp">PAINEL DIVACP</button>
+              <button class="nav-tab" data-page="andamento-page">ANDAMENTO</button>
+              <button class="nav-tab" data-page="nr-licitacao-page">NR. LICITAÇÃO</button>
+              <button class="nav-tab active" data-page="diarios-page">DIÁRIOS</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h3>CONTROLE DE DIÁRIOS</h3>
+            <span style="color: var(--muted); font-size: 14px;">LANÇAMENTOS E MOVIMENTAÇÕES DO SETOR</span>
+          </div>
+
+          <div class="diarios-filtros">
+            <button class="diario-filtro-btn active" data-filtro="TODOS">DIÁRIOS</button>
+            <button class="diario-filtro-btn" data-filtro="EM ANDAMENTO">EM ANDAMENTO</button>
+            <button class="diario-filtro-btn" data-filtro="SUSPENSO">SUSPENSO</button>
+            <button class="diario-filtro-btn" data-filtro="FINALIZADO">FINALIZADOS</button>
+            <button class="diario-filtro-btn" data-filtro="GERAL" id="btnGeralAndamentos">GERAL</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>DATA</th>
+                  <th>DIA DA SEMANA</th>
+                  <th>HORA</th>
+                  <th>NR. PROCESSO</th>
+                  <th>MODALIDADE</th>
+                  <th>NR. LICITAÇÃO</th>
+                  <th>STATUS</th>
+                  <th>OBJETO</th>
+                  <th>ÓRGÃO</th>
+                  <th>ITENS / LOTES</th>
+                  <th>RESPONSÁVEL</th>
+                  <th>VALOR ESTIMADO</th>
+                  <th>SETOR</th>
+                </tr>
+              </thead>
+              <tbody id="diariosTableBody">
+                <tr data-diario-status="EM ANDAMENTO">
+                  <td>13/03/2026</td><td>SEXTA-FEIRA</td><td>09:00</td>
+                  <td>1234.123456.12345/1234-12</td><td>PREGÃO ELETRÔNICO</td><td>014/2026</td>
+                  <td><span class="diario-status-badge status-andamento">EM ANDAMENTO</span></td>
+                  <td class="objeto-cell">AQUISIÇÃO DE MATERIAL DE EXPEDIENTE PARA TODAS AS UNIDADES ADMINISTRATIVAS DA SECRETARIA MUNICIPAL DE EDUCAÇÃO.</td>
+                  <td>SEMED</td><td>LOTE 01</td><td>CARLOS</td><td>R$ 150.000,00</td><td>DIVACP</td>
+                </tr>
+                <tr data-diario-status="FINALIZADO">
+                  <td>12/03/2026</td><td>QUINTA-FEIRA</td><td>10:30</td>
+                  <td>5678.654321.54321/4321-21</td><td>CONCORRÊNCIA</td><td>008/2026</td>
+                  <td><span class="diario-status-badge status-finalizado">FINALIZADO</span></td>
+                  <td class="objeto-cell">CONTRATAÇÃO DE SERVIÇOS ESPECIALIZADOS PARA MANUTENÇÃO PREVENTIVA E CORRETIVA DOS EQUIPAMENTOS HOSPITALARES.</td>
+                  <td>SEMSA</td><td>LOTE ÚNICO</td><td>JOÃO</td><td>R$ 890.000,00</td><td>DIVCON</td>
+                </tr>
+                <tr data-diario-status="SUSPENSO">
+                  <td>11/03/2026</td><td>QUARTA-FEIRA</td><td>08:00</td>
+                  <td>9999.000111.22233/4444-55</td><td>CHAMAMENTO PÚBLICO</td><td>XXX/2026</td>
+                  <td><span class="diario-status-badge status-suspenso">SUSPENSO</span></td>
+                  <td class="objeto-cell">OBRA DE REFORMA PREDIAL COM ADEQUAÇÕES ESTRUTURAIS, ELÉTRICAS E HIDROSSANITÁRIAS NO PRÉDIO ADMINISTRATIVO.</td>
+                  <td>SEMINFRA</td><td>ITEM 01</td><td>PAULO</td><td>R$ 420.000,00</td><td>DIVACP</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CADASTRO DE PROCESSO ===== -->
+      <section id="cadastro-processo" class="page hidden">
+        <div class="section-title">
+          <div>
+            <h3>CADASTRO DE PROCESSO</h3>
+            <span style="color: var(--muted); font-size: 14px;">PREENCHA AS INFORMAÇÕES DO PROCESSO.</span>
+          </div>
+          <div class="cadastro-header-actions">
+            <button class="btn btn-light" id="backToPanelBtn">VOLTAR AO PAINEL</button>
+            <button class="btn btn-primary" type="submit" form="processForm" id="topSaveProcessBtn">CADASTRAR</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <form id="processForm" class="form-grid">
+            <div class="field">
+              <label for="nrProcesso">NR. PROCESSO</label>
+              <div class="input-with-status">
+                <input type="text" id="nrProcesso" placeholder="0000.000000.00000/0000-00" />
+                <span class="status-icon" id="statusNrProcesso">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="dataEntradaSelic">DATA ENTRADA SELIC</label>
+              <div class="input-with-status">
+                <input type="date" id="dataEntradaSelic" />
+                <span class="status-icon" id="statusDataEntradaSelic">✔</span>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="objeto">OBJETO</label>
+              <textarea id="objeto"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="orgao">ÓRGÃO</label>
+              <div class="input-with-status">
+                <input type="text" id="orgao" />
+                <span class="status-icon" id="statusOrgao">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="modalidadeFonte">MODALIDADE</label>
+              <div class="input-with-status">
+                <select id="modalidadeFonte">
+                  <option value="">SELECIONE</option>
+                  <option>CHAMAMENTO PÚBLICO</option>
+                  <option>COMPARAÇÃO DE PREÇOS</option>
+                  <option>CONCORRÊNCIA</option>
+                  <option>CONCORRÊNCIA ELETRÔNICA</option>
+                  <option>PREGÃO ELETRÔNICO</option>
+                  <option>PREGÃO ELETRÔNICO SRP</option>
+                  <option>SELEÇÃO DE CONSULTORES</option>
+                  <option>SELEÇÃO DE CONSULTORES INDIVIDUAL</option>
+                  <option>TOMADA DE PREÇOS</option>
+                </select>
+                <span class="status-icon" id="statusModalidade">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="numeroPregao">Nº LICITAÇÃO</label>
+              <div class="input-with-status">
+                <input type="text" id="numeroPregao" />
+                <span class="status-icon" id="statusNumeroPregao">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="fonteCadastro">FONTE</label>
+              <div class="input-with-status">
+                <input type="text" id="fonteCadastro" />
+                <span class="status-icon" id="statusFonteCadastro">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="setorCadastro">SETOR</label>
+              <div class="input-with-status">
+                <select id="setorCadastro">
+                  <option value="">SELECIONE</option>
+                  <option>DIVACP</option>
+                  <option>DIVCON</option>
+                  <option>CPC</option>
+                  <option>CEC</option>
+                  <option>ASSESSORIA</option>
+                  <option>ARQUIVO</option>
+                </select>
+                <span class="status-icon" id="statusSetorCadastro">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="valorEstimado">VALOR ESTIMADO</label>
+              <div class="input-with-status">
+                <input type="text" id="valorEstimado" placeholder="R$ 0,00" inputmode="numeric" />
+                <span class="status-icon" id="statusValorEstimado">✔</span>
+              </div>
+            </div>
+
+            <div class="field full">
+              <div class="info-box">
+                O Nº DA LICITAÇÃO JÁ ENTRA AUTOMATICAMENTE COMO XXX/2026 E SÓ SERÁ ALTERADO QUANDO VOCÊ GERAR O NÚMERO REAL NA TELA DE NR. LICITAÇÃO.
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===== DETALHES DO PROCESSO ===== -->
+      <section id="detalhes-processo" class="page hidden">
+        <div class="header-bar">
+          <div class="header-left">
+            <div class="brand-logo">DV</div>
+            <div class="brand-text">
+              <h1>DETALHES DO PROCESSO</h1>
+              <span>INFORMAÇÕES COMPLETAS DO PROCESSO SELECIONADO</span>
+            </div>
+          </div>
+          <div class="profile-menu">
+            <img class="profile-avatar" src="ICONES/01 - PERFIL.png" alt="PERFIL" />
+            <div class="profile-dropdown">
+              <button class="logoutBtn">SAIR</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-title">
+          <div></div>
+          <div class="details-actions">
+            <button class="btn btn-light" id="backToPanelFromDetailsBtn">VOLTAR AO PAINEL</button>
+            <button class="btn btn-success" id="sendFromDetailsBtn">📤 ENVIAR</button>
+            <button class="btn btn-primary" id="editProcessBtn">EDITAR</button>
+            <button class="btn btn-danger" id="deleteProcessBtn">EXCLUIR PROCESSO</button>
+            <button class="btn btn-primary hidden-block" id="saveEditProcessBtn">SALVAR EDIÇÃO</button>
+            <button class="btn btn-light hidden-block" id="cancelEditProcessBtn">CANCELAR</button>
+          </div>
+        </div>
+
+        <div class="card" id="detailsViewCard">
+          <div class="section-title">
+            <h3>INFORMAÇÕES DO PROCESSO</h3>
+          </div>
+          <div class="details-grid">
+            <div class="detail-item"><div class="detail-label">NR. PROCESSO</div><div class="detail-value" id="detail-nr-processo">-</div></div>
+            <div class="detail-item"><div class="detail-label">DATA ENTRADA SELIC</div><div class="detail-value" id="detail-data-entrada-selic">-</div></div>
+            <div class="detail-item"><div class="detail-label">ÓRGÃO</div><div class="detail-value" id="detail-orgao">-</div></div>
+            <div class="detail-item"><div class="detail-label">MODALIDADE</div><div class="detail-value" id="detail-modalidade">-</div></div>
+            <div class="detail-item"><div class="detail-label">NR. LICITAÇÃO</div><div class="detail-value" id="detail-nr-licitacao">-</div></div>
+
+            <div class="detail-item full"><div class="detail-label">OBJETO</div><div class="detail-value justified" id="detail-objeto">-</div></div>
+
+            <div class="detail-item"><div class="detail-label">FONTE</div><div class="detail-value" id="detail-fonte">-</div></div>
+            <div class="detail-item"><div class="detail-label">SETOR</div><div class="detail-value" id="detail-setor">-</div></div>
+            <div class="detail-item"><div class="detail-label">VALOR ESTIMADO</div><div class="detail-value" id="detail-valor-estimado">-</div></div>
+            <div class="detail-item"><div class="detail-label">ANO DA LICITAÇÃO</div><div class="detail-value" id="detail-ano-licitacao">-</div></div>
+            <div class="detail-item"><div class="detail-label">DATA ENTRADA DIVCON/CPC/CEC</div><div class="detail-value" id="detail-data-entrada-divcon">-</div></div>
+            <div class="detail-item"><div class="detail-label">RESPONSÁVEL PELA MINUTA</div><div class="detail-value" id="detail-responsavel-minuta">-</div></div>
+
+            <div class="detail-item"><div class="detail-label">STATUS DIVCON</div><div class="detail-value" id="detail-status-divcon">-</div></div>
+            <div class="detail-item"><div class="detail-label">ITENS/LOTE</div><div class="detail-value" id="detail-itens-lote">-</div></div>
+            <div class="detail-item"><div class="detail-label">RESPONSÁVEL</div><div class="detail-value" id="detail-responsavel">-</div></div>
+            <div class="detail-item"><div class="detail-label">DATA INICIAL</div><div class="detail-value" id="detail-data-inicial">-</div></div>
+            <div class="detail-item"><div class="detail-label">DATA FINAL</div><div class="detail-value" id="detail-data-final">-</div></div>
+
+            <div class="detail-item"><div class="detail-label">DATA DE ABERTURA</div><div class="detail-value" id="detail-data-abertura">-</div></div>
+            <div class="detail-item"><div class="detail-label">HORA</div><div class="detail-value" id="detail-hora">-</div></div>
+            <div class="detail-item"><div class="detail-label">ANDAMENTO</div><div class="detail-value" id="detail-andamento">-</div></div>
+            <div class="detail-item"><div class="detail-label">VALOR DESERTO/FRACASSADO</div><div class="detail-value" id="detail-valor-deserto">-</div></div>
+            <div class="detail-item"><div class="detail-label">SEI PLANILHA COMPARATIVA</div><div class="detail-value" id="detail-sei-planilha">-</div></div>
+
+            <div class="detail-item"><div class="detail-label">VALOR ESTIMADO ATUALIZADO</div><div class="detail-value" id="detail-valor-estimado-atualizado">-</div></div>
+            <div class="detail-item"><div class="detail-label">VALOR ADJUDICADO</div><div class="detail-value" id="detail-valor-adjudicado">-</div></div>
+            <div class="detail-item"><div class="detail-label">STATUS</div><div class="detail-value" id="detail-status">-</div></div>
+            <div class="detail-item"><div class="detail-label">SETOR DO RESPONSÁVEL</div><div class="detail-value" id="detail-setor-responsavel">-</div></div>
+          </div>
+        </div>
+
+        <div class="card hidden-block" id="detailsEditCard">
+          <div class="section-title">
+            <h3>EDITAR PROCESSO</h3>
+          </div>
+          <form id="editProcessForm" class="edit-form-grid">
+            <div class="field">
+              <label for="editNrProcesso">NR. PROCESSO</label>
+              <div class="input-with-status">
+                <input type="text" id="editNrProcesso" />
+                <span class="status-icon" id="statusEditNrProcesso">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editDataEntradaSelic">DATA ENTRADA SELIC</label>
+              <div class="input-with-status">
+                <input type="date" id="editDataEntradaSelic" />
+                <span class="status-icon" id="statusEditDataEntradaSelic">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editOrgao">ÓRGÃO</label>
+              <div class="input-with-status">
+                <input type="text" id="editOrgao" />
+                <span class="status-icon" id="statusEditOrgao">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editModalidade">MODALIDADE</label>
+              <div class="input-with-status">
+                <select id="editModalidade">
+                  <option value="">SELECIONE</option>
+                  <option>CHAMAMENTO PÚBLICO</option>
+                  <option>COMPARAÇÃO DE PREÇOS</option>
+                  <option>CONCORRÊNCIA</option>
+                  <option>CONCORRÊNCIA ELETRÔNICA</option>
+                  <option>PREGÃO ELETRÔNICO</option>
+                  <option>PREGÃO ELETRÔNICO SRP</option>
+                  <option>SELEÇÃO DE CONSULTORES</option>
+                  <option>SELEÇÃO DE CONSULTORES INDIVIDUAL</option>
+                  <option>TOMADA DE PREÇOS</option>
+                </select>
+                <span class="status-icon" id="statusEditModalidade">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editNrLicitacao">NR. LICITAÇÃO</label>
+              <div class="input-with-status">
+                <input type="text" id="editNrLicitacao" />
+                <span class="status-icon" id="statusEditNrLicitacao">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editFonte">FONTE</label>
+              <div class="input-with-status">
+                <input type="text" id="editFonte" />
+                <span class="status-icon" id="statusEditFonte">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editSetor">SETOR</label>
+              <div class="input-with-status">
+                <select id="editSetor">
+                  <option value="">SELECIONE</option>
+                  <option>DIVACP</option>
+                  <option>DIVCON</option>
+                  <option>CPC</option>
+                  <option>CEC</option>
+                  <option>ASSESSORIA</option>
+                  <option>ARQUIVO</option>
+                </select>
+                <span class="status-icon" id="statusEditSetor">✔</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="editValorEstimado">VALOR ESTIMADO</label>
+              <div class="input-with-status">
+                <input type="text" id="editValorEstimado" inputmode="numeric" />
+                <span class="status-icon" id="statusEditValorEstimado">✔</span>
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="editObjeto">OBJETO</label>
+              <textarea id="editObjeto"></textarea>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">AÇÃO CONCLUÍDA.</div>
+
+  <!-- MODAL ENVIAR PROCESSO -->
+  <div class="modal-overlay" id="sendModalOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3>ENVIAR PROCESSO</h3>
+          <span>CONFIRA OS DADOS E CONFIRME O ENVIO.</span>
+        </div>
+        <button type="button" class="modal-close" id="closeSendModalBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="send-summary">
+          <div class="send-summary-card">
+            <div class="send-summary-label">NR. PROCESSO</div>
+            <div class="send-summary-value" id="sendModalNrProcesso">-</div>
+          </div>
+          <div class="send-summary-card">
+            <div class="send-summary-label">ÓRGÃO</div>
+            <div class="send-summary-value" id="sendModalOrgao">-</div>
+          </div>
+          <div class="send-summary-card">
+            <div class="send-summary-label">MODALIDADE</div>
+            <div class="send-summary-value" id="sendModalModalidade">-</div>
+          </div>
+          <div class="send-summary-card">
+            <div class="send-summary-label">NR. LICITAÇÃO</div>
+            <div class="send-summary-value" id="sendModalNrLicitacao">-</div>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="sendDestino">DESTINO</label>
+            <select id="sendDestino">
+              <option value="">SELECIONE O DESTINO</option>
+              <option value="DIVCON">DIVCON</option>
+              <option value="CEC">CEC</option>
+              <option value="CPC">CPC</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sendData">DATA DO ENVIO</label>
+            <input type="date" id="sendData" />
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-light" type="button" id="cancelSendModalBtn">CANCELAR</button>
+        <button class="btn btn-primary" type="button" id="confirmSendBtn">CONFIRMAR ENVIO</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL VISUALIZAR ANDAMENTO -->
+  <div class="modal-overlay" id="viewAndamentoModalOverlay">
+    <div class="modal-box modal-box-large">
+      <div class="modal-header">
+        <div>
+          <h3>DETALHES DO ANDAMENTO</h3>
+          <span>INFORMAÇÕES COMPLETAS DO PROCESSO ENCAMINHADO</span>
+        </div>
+        <button type="button" class="modal-close" id="closeViewAndamentoBtn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="view-andamento-grid" id="viewAndamentoGrid"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-light" type="button" id="closeViewAndamentoFooterBtn">FECHAR</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="DIVACP.js"></script>
+</body>
+</html>
