@@ -22,6 +22,12 @@
       --violet: #8b5cf6;
       --violet-dim: rgba(139,92,246,0.12);
       --violet-glow: rgba(139,92,246,0.35);
+      --cyan: #06b6d4;
+      --cyan-dim: rgba(6,182,212,0.12);
+      --cyan-glow: rgba(6,182,212,0.35);
+      --rose: #f43f5e;
+      --rose-dim: rgba(244,63,94,0.12);
+      --rose-glow: rgba(244,63,94,0.35);
       --text: #f1f5f9;
       --muted: #64748b;
       --danger: #ef4444;
@@ -199,6 +205,23 @@
 
     .system-select {
       display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .system-btn.wide {
+      grid-column: span 1;
+    }
+
+    /* Últimos 2 botões centralizados numa linha */
+    .system-select .system-btn:nth-child(4),
+    .system-select .system-btn:nth-child(5) {
+      grid-column: span 1;
+    }
+
+    .system-select-bottom {
+      display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       margin-bottom: 22px;
@@ -230,6 +253,8 @@
     .system-btn.divcon::before  { background: var(--blue-dim); }
     .system-btn.cec::before     { background: var(--amber-dim); }
     .system-btn.cpc::before     { background: var(--violet-dim); }
+    .system-btn.dipreg::before  { background: var(--cyan-dim); }
+    .system-btn.adm::before     { background: var(--rose-dim); }
 
     .system-btn:hover::before,
     .system-btn.active::before  { opacity: 1; }
@@ -238,6 +263,8 @@
     .system-btn.divcon:hover, .system-btn.divcon.active { border-color: var(--blue);    box-shadow: 0 0 18px var(--blue-glow); }
     .system-btn.cec:hover,    .system-btn.cec.active    { border-color: var(--amber);   box-shadow: 0 0 18px var(--amber-glow); }
     .system-btn.cpc:hover,    .system-btn.cpc.active    { border-color: var(--violet);  box-shadow: 0 0 18px var(--violet-glow); }
+    .system-btn.dipreg:hover, .system-btn.dipreg.active { border-color: var(--cyan);    box-shadow: 0 0 18px var(--cyan-glow); }
+    .system-btn.adm:hover,    .system-btn.adm.active    { border-color: var(--rose);    box-shadow: 0 0 18px var(--rose-glow); }
 
     .system-btn-name {
       font-family: 'Bebas Neue', sans-serif;
@@ -260,6 +287,12 @@
 
     .system-btn.cpc.active .system-btn-name,
     .system-btn.cpc:hover  .system-btn-name    { color: #c4b5fd; }
+
+    .system-btn.dipreg.active .system-btn-name,
+    .system-btn.dipreg:hover  .system-btn-name { color: var(--cyan); }
+
+    .system-btn.adm.active .system-btn-name,
+    .system-btn.adm:hover  .system-btn-name    { color: #fb7185; }
 
     .system-btn-desc {
       font-size: 9px;
@@ -290,6 +323,8 @@
     .btn-enter.divcon-mode { background: var(--blue);    color: #fff;    box-shadow: 0 8px 24px var(--blue-glow); }
     .btn-enter.cec-mode    { background: var(--amber);   color: #0a0c10; box-shadow: 0 8px 24px var(--amber-glow); }
     .btn-enter.cpc-mode    { background: var(--violet);  color: #fff;    box-shadow: 0 8px 24px var(--violet-glow); }
+    .btn-enter.dipreg-mode { background: var(--cyan);    color: #0a0c10; box-shadow: 0 8px 24px var(--cyan-glow); }
+    .btn-enter.adm-mode    { background: var(--rose);    color: #fff;    box-shadow: 0 8px 24px var(--rose-glow); }
 
     .btn-enter:hover  { transform: translateY(-2px); filter: brightness(1.1); }
     .btn-enter:active { transform: translateY(0); }
@@ -309,6 +344,279 @@
     }
 
     @keyframes shimmer { to { left: 100%; } }
+
+    /* ── LINK SOLICITAR ACESSO ── */
+    .link-solicitar {
+      display: block;
+      text-align: center;
+      margin-top: 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+    }
+
+    .link-solicitar:hover { color: var(--accent); }
+
+    .link-solicitar span {
+      border-bottom: 1px dashed currentColor;
+      padding-bottom: 1px;
+    }
+
+    /* ── MODAL SOLICITAÇÃO ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-box {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 30px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.25s ease;
+      position: relative;
+    }
+
+    .modal-overlay.show .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+    }
+
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 2px;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .modal-desc {
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    .modal-field { margin-bottom: 14px; }
+
+    .modal-field label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+
+    .modal-field input {
+      width: 100%;
+      background: #0d1017;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .modal-field input::placeholder { color: #2d3748; }
+
+    .modal-field input:focus,
+    .modal-field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    .modal-field select {
+      width: 100%;
+      background: #0d1017;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+
+    .modal-field select option {
+      background: #12151c;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      padding: 8px;
+    }
+
+    .modal-field select option:disabled {
+      color: #2d3748;
+    }
+
+    .modal-error {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
+      font-size: 11px;
+      font-family: 'DM Mono', monospace;
+      padding: 9px 13px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      display: none;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-error.show { display: block; }
+
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .btn-modal-cancel {
+      flex: 1;
+      padding: 13px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-modal-cancel:hover {
+      border-color: var(--muted);
+      color: var(--text);
+    }
+
+    .btn-modal-send {
+      flex: 2;
+      padding: 13px;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      color: #0a0c10;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 6px 20px var(--accent-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-modal-send:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-modal-send:active { transform: translateY(0); }
+
+    /* Estado de sucesso */
+    .modal-success {
+      text-align: center;
+      padding: 10px 0 6px;
+      display: none;
+    }
+
+    .modal-success.show { display: block; }
+
+    .modal-form-area.hidden { display: none; }
+
+    .success-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+      display: block;
+      animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .success-msg {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+    }
+
+    .btn-modal-close {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid rgba(34,197,94,0.3);
+      border-radius: 10px;
+      color: var(--accent);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 15px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-modal-close:hover { background: var(--accent-dim); }
 
     .login-footer {
       text-align: center;
@@ -357,7 +665,8 @@
       <div id="errorMsg" class="error-msg">USUÁRIO OU SENHA INCORRETOS.</div>
 
       <div class="system-label">SELECIONE O SISTEMA</div>
-      <div class="system-select">
+
+      <div class="system-select" style="grid-template-columns:1fr 1fr 1fr; margin-bottom:22px;">
         <button class="system-btn divacp active" id="btnDivacp" onclick="selectSystem('divacp')">
           <div class="system-btn-name">DIVACP</div>
           <div class="system-btn-desc">PAINEL DE PROCESSOS</div>
@@ -374,15 +683,82 @@
           <div class="system-btn-name">CPC</div>
           <div class="system-btn-desc">CONTROLE DE PROCESSOS</div>
         </button>
+        <button class="system-btn dipreg" id="btnDipreg" onclick="selectSystem('dipreg')">
+          <div class="system-btn-name">DIPREG</div>
+          <div class="system-btn-desc">CONTROLE DE PROCESSOS</div>
+        </button>
+        <button class="system-btn adm" id="btnAdm" onclick="selectSystem('adm')">
+          <div class="system-btn-name">ADM</div>
+          <div class="system-btn-desc">ADMINISTRAÇÃO</div>
+        </button>
       </div>
 
       <button class="btn-enter divacp-mode" id="btnEntrar" onclick="fazerLogin()">
         ENTRAR NO SISTEMA
       </button>
+
+      <button class="link-solicitar" onclick="abrirModalSolicitacao()">
+        <span>🔑 SOLICITAR ACESSO AO SISTEMA</span>
+      </button>
     </div>
 
     <div class="login-footer">© 2026 — VERSÃO 04 — ACESSO RESTRITO</div>
 
+  </div>
+
+  <!-- MODAL SOLICITAÇÃO DE ACESSO -->
+  <div class="modal-overlay" id="modalSolicitacao">
+    <div class="modal-box">
+
+      <div class="modal-form-area" id="modalFormArea">
+        <div class="modal-badge">🔐 ACESSO RESTRITO</div>
+        <div class="modal-title">SOLICITAÇÃO DE ACESSO</div>
+        <div class="modal-desc">
+          PREENCHA OS DADOS ABAIXO. SUA SOLICITAÇÃO SERÁ<br>ANALISADA PELO ADMINISTRADOR DO SISTEMA.
+        </div>
+
+        <div class="modal-field">
+          <label>NOME COMPLETO</label>
+          <input type="text" id="solNome" placeholder="SEU NOME COMPLETO" autocomplete="off">
+        </div>
+
+        <div class="modal-field">
+          <label>E-MAIL INSTITUCIONAL</label>
+          <input type="email" id="solEmail" placeholder="SEU@EMAIL.COM.BR" autocomplete="off">
+        </div>
+
+        <div class="modal-field">
+          <label>SETOR / DIVISÃO</label>
+          <select id="solSetor">
+            <option value="" disabled selected>SELECIONE SEU SETOR</option>
+            <option value="DIVACP">DIVACP — PAINEL DE PROCESSOS</option>
+            <option value="DIVCON">DIVCON — CONTROLE DE PROCESSOS</option>
+            <option value="CEC">CEC — CONTROLE DE PROCESSOS</option>
+            <option value="CPC">CPC — CONTROLE DE PROCESSOS</option>
+            <option value="DIPREG">DIPREG — CONTROLE DE PROCESSOS</option>
+            <option value="ADM">ADM — ADMINISTRAÇÃO</option>
+          </select>
+        </div>
+
+        <div id="modalErrorMsg" class="modal-error">PREENCHA TODOS OS CAMPOS CORRETAMENTE.</div>
+
+        <div class="modal-actions">
+          <button class="btn-modal-cancel" onclick="fecharModalSolicitacao()">CANCELAR</button>
+          <button class="btn-modal-send" onclick="enviarSolicitacao()">ENVIAR SOLICITAÇÃO</button>
+        </div>
+      </div>
+
+      <div class="modal-success" id="modalSuccess">
+        <span class="success-icon">✅</span>
+        <div class="success-title">SOLICITAÇÃO ENVIADA!</div>
+        <div class="success-msg">
+          SUA SOLICITAÇÃO FOI REGISTRADA COM SUCESSO.<br>
+          O ADMINISTRADOR ENTRARÁ EM CONTATO<br>PELO E-MAIL INFORMADO EM BREVE.
+        </div>
+        <button class="btn-modal-close" onclick="fecharModalSolicitacao()">FECHAR</button>
+      </div>
+
+    </div>
   </div>
 
   <script>
@@ -397,22 +773,18 @@
       'divacp': 'DIVACP.html',
       'divcon': 'DIVCON.html',
       'cec':    'CEC.html',
-      'cpc':    'CPC.html'
+      'cpc':    'CPC.html',
+      'dipreg': 'DIPREG.html',
+      'adm':    'ADM.html'
     };
 
     let sistemaSelecionado = 'divacp';
 
     function selectSystem(sistema) {
       sistemaSelecionado = sistema;
-
-      // Desativa todos os botões
       document.querySelectorAll('.system-btn').forEach(b => b.classList.remove('active'));
-
-      // Ativa o selecionado
-      const ids = { divacp: 'btnDivacp', divcon: 'btnDivcon', cec: 'btnCec', cpc: 'btnCpc' };
+      const ids = { divacp: 'btnDivacp', divcon: 'btnDivcon', cec: 'btnCec', cpc: 'btnCpc', dipreg: 'btnDipreg', adm: 'btnAdm' };
       document.getElementById(ids[sistema]).classList.add('active');
-
-      // Atualiza cor do botão entrar
       document.getElementById('btnEntrar').className = `btn-enter ${sistema}-mode`;
     }
 
@@ -458,6 +830,69 @@
 
     document.getElementById('inputUsuario').addEventListener('input', function() {
       this.value = this.value.toUpperCase();
+    });
+
+    // ── MODAL SOLICITAÇÃO DE ACESSO ──
+    function abrirModalSolicitacao() {
+      document.getElementById('solNome').value = '';
+      document.getElementById('solEmail').value = '';
+      document.getElementById('solSetor').selectedIndex = 0;
+      document.getElementById('modalErrorMsg').classList.remove('show');
+      document.getElementById('modalFormArea').classList.remove('hidden');
+      document.getElementById('modalSuccess').classList.remove('show');
+      document.getElementById('modalSolicitacao').classList.add('show');
+    }
+
+    function fecharModalSolicitacao() {
+      document.getElementById('modalSolicitacao').classList.remove('show');
+    }
+
+    function enviarSolicitacao() {
+      const nome  = document.getElementById('solNome').value.trim();
+      const email = document.getElementById('solEmail').value.trim();
+      const setor = document.getElementById('solSetor').value.trim();
+      const erro  = document.getElementById('modalErrorMsg');
+
+      erro.classList.remove('show');
+
+      if (!nome || nome.length < 5) {
+        erro.textContent = 'INFORME O NOME COMPLETO (MÍNIMO 5 CARACTERES).';
+        erro.classList.add('show');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        erro.textContent = 'INFORME UM E-MAIL VÁLIDO.';
+        erro.classList.add('show');
+        return;
+      }
+
+      if (!setor || setor.length < 2) {
+        erro.textContent = 'SELECIONE O SEU SETOR / DIVISÃO.';
+        erro.classList.add('show');
+        return;
+      }
+
+      // Salva no localStorage para o ADM consultar
+      const solicitacoes = JSON.parse(localStorage.getItem('selic_solicitacoes') || '[]');
+      solicitacoes.push({
+        nome: nome.toUpperCase(),
+        email: email.toLowerCase(),
+        setor: setor.toUpperCase(),
+        data: new Date().toLocaleString('pt-BR'),
+        status: 'PENDENTE'
+      });
+      localStorage.setItem('selic_solicitacoes', JSON.stringify(solicitacoes));
+
+      // Mostra sucesso
+      document.getElementById('modalFormArea').classList.add('hidden');
+      document.getElementById('modalSuccess').classList.add('show');
+    }
+
+    // Fecha modal ao clicar fora
+    document.getElementById('modalSolicitacao').addEventListener('click', function(e) {
+      if (e.target === this) fecharModalSolicitacao();
     });
   </script>
 
