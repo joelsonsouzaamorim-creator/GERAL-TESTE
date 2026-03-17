@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEC - CONTROLE DE PROCESSOS</title>
+  <link rel="stylesheet" href="CEC.css">
+</head>
+<body>
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="header-bar">
+      <div class="header-left">
+        <div class="header-logo">📋</div>
+        <div class="header-title-group">
+          <h1>CONTROLE DE PROCESSO</h1>
+          <span>CEC — SISTEMA INTERNO</span>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="notification-wrap">
+          <button id="notificationBtn" class="notification-btn" title="NOTIFICAÇÕES">🔔
+            <span id="notificationBadge" class="notification-badge">0</span>
+          </button>
+
+          <div id="notificationPanel" class="notification-panel">
+            <div class="notification-header">
+              <strong>NOTIFICAÇÕES DA CEC</strong>
+              <button class="btn btn-light" id="clearNotificationsBtn" style="padding:5px 10px;font-size:10px;">LIMPAR</button>
+            </div>
+            <div id="notificationList" class="notification-list">
+              <div class="notification-empty">NENHUMA NOTIFICAÇÃO NO MOMENTO.</div>
+            </div>
+          </div>
+        </div>
+
+        <img src="2920072.png" class="profile" alt="PERFIL">
+      </div>
+    </div>
+
+    <!-- METRIC CARDS -->
+    <div class="grid-cards">
+      <div class="metric-card active" data-filter="recebidos">
+        <h3>RECEBIDOS</h3>
+        <div class="metric" id="countRecebidos">0</div>
+      </div>
+
+      <div class="metric-card" data-filter="andamento">
+        <h3>ANDAMENTO</h3>
+        <div class="metric" id="countAndamento">0</div>
+      </div>
+
+      <div class="metric-card" data-filter="finalizados">
+        <h3>FINALIZADOS</h3>
+        <div class="metric" id="countFinalizados">0</div>
+      </div>
+
+      <div class="metric-card" data-filter="geral">
+        <h3>GERAL</h3>
+        <div class="metric" id="countGeral">0</div>
+      </div>
+    </div>
+
+    <!-- CONTROL BAR -->
+    <div class="control-bar">
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-filter="recebidos">RECEBIDOS</button>
+        <button class="nav-tab" data-filter="andamento">ANDAMENTO</button>
+        <button class="nav-tab" data-filter="finalizados">FINALIZADOS</button>
+        <button class="nav-tab" data-filter="geral">GERAL</button>
+      </div>
+
+      <div class="search-card">
+        <div class="field">
+          <label>PESQUISA GERAL</label>
+          <input type="text" id="pesquisa" placeholder="PESQUISAR EM TODOS OS PROCESSOS">
+        </div>
+        <button class="btn btn-light" id="clearSearchBtn">LIMPAR</button>
+      </div>
+    </div>
+
+    <!-- MAIN TABLE CARD -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-icon">📁</div>
+        <h3>CONTROLE RESUMIDO DE PROCESSOS — CEC</h3>
+      </div>
+
+      <div id="searchInfo" class="search-info">
+        PESQUISA GERAL ATIVA: EXIBINDO RESULTADOS DE TODOS OS STATUS.
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-processo">NR PROCESSO</th>
+              <th class="col-data">DATA</th>
+              <th class="col-orgao">ÓRGÃO</th>
+              <th class="col-objeto">OBJETO</th>
+              <th class="col-status">STATUS</th>
+              <th class="col-acao">AÇÃO</th>
+            </tr>
+          </thead>
+          <tbody id="cecTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL DETALHES -->
+  <div class="modal" id="processModal">
+    <div class="modal-box">
+      <h2>DETALHES DO PROCESSO</h2>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <strong>NR PROCESSO</strong>
+          <span id="modalProcesso">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>DATA</strong>
+          <span id="modalData">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>ÓRGÃO</strong>
+          <span id="modalOrgao">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>STATUS DO FLUXO</strong>
+          <span id="modalStatusFluxo">-</span>
+        </div>
+        <div class="detail-item full">
+          <strong>OBJETO</strong>
+          <span id="modalObjeto">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>ORIGEM</strong>
+          <span id="modalOrigem">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>DESTINO</strong>
+          <span id="modalDestino">CEC</span>
+        </div>
+        <div class="detail-item">
+          <strong>SITUAÇÃO / ANDAMENTO</strong>
+          <span id="modalSituacao">-</span>
+        </div>
+        <div class="detail-item">
+          <strong>RESPONSÁVEL</strong>
+          <span id="modalResponsavel">-</span>
+        </div>
+        <div class="detail-item full">
+          <strong>OBSERVAÇÕES</strong>
+          <span id="modalObservacoes">-</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-light" onclick="closeModal()">FECHAR</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EDITAR -->
+  <div class="modal" id="editModal">
+    <div class="modal-box">
+      <h2>EDITAR PROCESSO</h2>
+
+      <div class="edit-form">
+        <div class="edit-group">
+          <label for="editProcesso">NR PROCESSO</label>
+          <input type="text" id="editProcesso" readonly>
+        </div>
+        <div class="edit-group">
+          <label for="editStatusFluxo">STATUS DO FLUXO</label>
+          <input type="text" id="editStatusFluxo" readonly>
+        </div>
+        <div class="edit-group">
+          <label for="editData">DATA</label>
+          <input type="text" id="editData" placeholder="DD/MM/AAAA">
+        </div>
+        <div class="edit-group">
+          <label for="editOrgao">ÓRGÃO</label>
+          <input type="text" id="editOrgao" placeholder="ÓRGÃO">
+        </div>
+        <div class="edit-group full">
+          <label for="editObjeto">OBJETO</label>
+          <textarea id="editObjeto" placeholder="OBJETO"></textarea>
+        </div>
+        <div class="edit-group">
+          <label for="editOrigem">ORIGEM</label>
+          <input type="text" id="editOrigem" placeholder="ORIGEM">
+        </div>
+        <div class="edit-group">
+          <label for="editDestino">DESTINO</label>
+          <input type="text" id="editDestino" value="CEC" readonly>
+        </div>
+        <div class="edit-group">
+          <label for="editSituacao">SITUAÇÃO / ANDAMENTO</label>
+          <input type="text" id="editSituacao" placeholder="ANDAMENTO">
+        </div>
+        <div class="edit-group">
+          <label for="editResponsavel">RESPONSÁVEL</label>
+          <input type="text" id="editResponsavel" placeholder="RESPONSÁVEL">
+        </div>
+        <div class="edit-group full">
+          <label for="editObservacoes">OBSERVAÇÕES</label>
+          <textarea id="editObservacoes" placeholder="OBSERVAÇÕES"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-light" onclick="closeEditModal()">CANCELAR</button>
+        <button class="btn btn-primary" onclick="saveEdit()">SALVAR ALTERAÇÕES</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="CEC.js"></script>
+</body>
+</html>
