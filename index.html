@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SELIC — ACESSO AO SISTEMA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --panel: #12151c;
+      --border: #1e2330;
+      --accent: #22c55e;
+      --accent-dim: rgba(34,197,94,0.12);
+      --accent-glow: rgba(34,197,94,0.35);
+      --blue: #2563eb;
+      --blue-dim: rgba(37,99,235,0.12);
+      --blue-glow: rgba(37,99,235,0.35);
+      --text: #f1f5f9;
+      --muted: #64748b;
+      --danger: #ef4444;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Grade de fundo animada */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34,197,94,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,197,94,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridScroll 20s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes gridScroll {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    /* Brilho central */
+    .bg-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(34,197,94,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Container principal */
+    .login-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 460px;
+      padding: 20px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cabeçalho */
+    .login-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-badge {
+      display: inline-block;
+      background: var(--accent-dim);
+      border: 1px solid rgba(34,197,94,0.25);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .login-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      letter-spacing: 4px;
+      line-height: 1;
+      background: linear-gradient(135deg, #f1f5f9 30%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .login-subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-top: 6px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* Card do formulário */
+    .login-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03) inset;
+    }
+
+    /* Campos */
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .field input {
+      width: 100%;
+      background: #0d1017;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-transform: uppercase;
+    }
+
+    .field input::placeholder {
+      color: #2d3748;
+      text-transform: uppercase;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-dim);
+    }
+
+    /* Mensagem de erro */
+    .error-msg {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #fca5a5;
+      font-size: 12px;
+      font-family: 'DM Mono', monospace;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      display: none;
+      letter-spacing: 0.5px;
+    }
+
+    .error-msg.show { display: block; }
+
+    /* Separador de sistema */
+    .system-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .system-select {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .system-btn {
+      background: #0d1017;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .system-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s;
+      border-radius: 12px;
+    }
+
+    .system-btn.divacp::before {
+      background: var(--accent-dim);
+    }
+
+    .system-btn.divcon::before {
+      background: var(--blue-dim);
+    }
+
+    .system-btn:hover::before,
+    .system-btn.active::before {
+      opacity: 1;
+    }
+
+    .system-btn.divacp:hover,
+    .system-btn.divacp.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .system-btn.divcon:hover,
+    .system-btn.divcon.active {
+      border-color: var(--blue);
+      box-shadow: 0 0 20px var(--blue-glow);
+    }
+
+    .system-btn-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.2s;
+    }
+
+    .system-btn.divacp .system-btn-name { color: #94a3b8; }
+    .system-btn.divacp.active .system-btn-name,
+    .system-btn.divacp:hover .system-btn-name { color: var(--accent); }
+
+    .system-btn.divcon .system-btn-name { color: #94a3b8; }
+    .system-btn.divcon.active .system-btn-name,
+    .system-btn.divcon:hover .system-btn-name { color: #60a5fa; }
+
+    .system-btn-desc {
+      font-size: 9px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-top: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Botão de entrar */
+    .btn-enter {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-enter.divacp-mode {
+      background: var(--accent);
+      color: #0a0c10;
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+
+    .btn-enter.divcon-mode {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 8px 24px var(--blue-glow);
+    }
+
+    .btn-enter:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+
+    .btn-enter:active {
+      transform: translateY(0);
+    }
+
+    /* Rodapé */
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: #2d3748;
+    }
+
+    /* Animação de loading */
+    .btn-enter.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .btn-enter.loading::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: shimmer 0.8s ease infinite;
+    }
+
+    @keyframes shimmer {
+      to { left: 100%; }
+    }
+
+    /* Cantos decorativos */
+    .corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0.3;
+    }
+    .corner-tl { top: 12px; left: 12px; border-top: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner-tr { top: 12px; right: 12px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+    .corner-bl { bottom: 12px; left: 12px; border-bottom: 1px solid var(--accent); border-left: 1px solid var(--accent); }
+    .corner-br { bottom: 12px; right: 12px; border-bottom: 1px solid var(--accent); border-right: 1px solid var(--accent); }
+
+    @media (max-width: 480px) {
+      .login-title { font-size: 40px; }
+      .login-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="login-wrap">
+
+    <div class="login-header">
+      <div class="login-badge">SISTEMA DE CONTROLE</div>
+      <div class="login-title">SELIC</div>
+      <div class="login-subtitle">SECRETARIA MUNICIPAL DE LICITAÇÕES E CONTRATOS</div>
+    </div>
+
+    <div class="login-card">
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+      <div class="field">
+        <label>USUÁRIO</label>
+        <input type="text" id="inputUsuario" placeholder="SEU USUÁRIO" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label>SENHA</label>
+        <input type="password" id="inputSenha" placeholder="••••••••" autocomplete="off">
+      </div>
+
+      <div id="errorMsg" class="error-msg">USUÁRIO OU SENHA INCORRETOS.</div>
+
+      <div class="system-label">SELECIONE O SISTEMA</div>
+      <div class="system-select">
+        <button class="system-btn divacp active" id="btnDivacp" onclick="selectSystem('divacp')">
+          <div class="system-btn-name">DIVACP</div>
+          <div class="system-btn-desc">PAINEL DE PROCESSOS</div>
+        </button>
+        <button class="system-btn divcon" id="btnDivcon" onclick="selectSystem('divcon')">
+          <div class="system-btn-name">DIVCON</div>
+          <div class="system-btn-desc">CONTROLE DE PROCESSOS</div>
+        </button>
+      </div>
+
+      <button class="btn-enter divacp-mode" id="btnEntrar" onclick="fazerLogin()">
+        ENTRAR NO SISTEMA
+      </button>
+    </div>
+
+    <div class="login-footer">© 2026 — VERSÃO 04 — ACESSO RESTRITO</div>
+
+  </div>
+
+  <script>
+    // ===== USUÁRIOS E SENHAS =====
+    // Adicione ou edite os usuários aqui
+    const USUARIOS = {
+      'ADMIN':    '1234',
+      'JOELSON':  '1234',
+      'OPERADOR': '1234'
+    };
+
+    let sistemaSelecionado = 'divacp';
+
+    function selectSystem(sistema) {
+      sistemaSelecionado = sistema;
+
+      document.getElementById('btnDivacp').classList.toggle('active', sistema === 'divacp');
+      document.getElementById('btnDivcon').classList.toggle('active', sistema === 'divcon');
+
+      const btn = document.getElementById('btnEntrar');
+      if (sistema === 'divacp') {
+        btn.className = 'btn-enter divacp-mode';
+      } else {
+        btn.className = 'btn-enter divcon-mode';
+      }
+    }
+
+    function fazerLogin() {
+      const usuario = document.getElementById('inputUsuario').value.trim().toUpperCase();
+      const senha   = document.getElementById('inputSenha').value.trim();
+      const erro    = document.getElementById('errorMsg');
+      const btn     = document.getElementById('btnEntrar');
+
+      erro.classList.remove('show');
+
+      if (!usuario || !senha) {
+        erro.textContent = 'PREENCHA O USUÁRIO E A SENHA.';
+        erro.classList.add('show');
+        return;
+      }
+
+      if (!sistemaSelecionado) {
+        erro.textContent = 'SELECIONE O SISTEMA (DIVACP OU DIVCON).';
+        erro.classList.add('show');
+        return;
+      }
+
+      if (USUARIOS[usuario] !== senha) {
+        erro.textContent = 'USUÁRIO OU SENHA INCORRETOS.';
+        erro.classList.add('show');
+        document.getElementById('inputSenha').value = '';
+        return;
+      }
+
+      // Login OK — animação e redirecionamento
+      btn.classList.add('loading');
+      btn.textContent = 'CARREGANDO...';
+
+      setTimeout(function() {
+        if (sistemaSelecionado === 'divacp') {
+          window.location.href = 'DIVACP.html';
+        } else {
+          window.location.href = 'DIVCON.html';
+        }
+      }, 800);
+    }
+
+    // Tecla Enter aciona o login
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') fazerLogin();
+    });
+
+    // Forçar maiúsculo no campo usuário
+    document.getElementById('inputUsuario').addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+    });
+  </script>
+
+</body>
+</html>
